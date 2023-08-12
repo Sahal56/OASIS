@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Temparature Converter</title>
+    <style>
+        :root {
+            --primary: #00fbff;
+            --secondary: #ff00a6;
+            --pure: #ffffff;
+            --background: #000000;
+        }
+
+        body {
+            background-color: var(--background);
+        }
+
+        .myTab {
+            margin: auto;
+            width: 30%;
+            border: 5px;
+            border-style: dotted;
+            background-color: var(--background);
+            border-color: var(--primary);
+        }
+
+        td {
+            padding: 20px;
+        }
+
+        h4 {
+            font-size: 40px;
+            text-align: center;
+            color: var(--pure);
+        }
+
+        label {
+            font-size: 25px;
+            text-align: center;
+            color: var(--pure);
+        }
+
+        .display {
+
+            font-size: 20px;
+            border: 2px;
+            border-style: dashed;
+            border-color: var(--secondary);
+            background: #fff;
+            padding: 10px;
+        }
+
+        .cal-btn {
+            padding: 12px;
+            width: 100%;
+            background: var(--secondary);
+            border-color: yellow;
+            color: yellow;
+            text-transform: uppercase;
+            font-size: 20px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        select {
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <form action="" name="form">
+
+        <table class="myTab">
+            <tr>
+                <td colspan="2">
+                    <h4>Convert Temperature</h4>
+                </td>
+            </tr>
+
+            <tr>
+                <td><label for="">Input:</label></td>
+                <td>
+                    <input type="number" id="input_value" class="display" placeholder="0" name="value">
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label for="">From:</label>
+                </td>
+                <td>
+                    <select name="input" id="input">
+                        <option value="celsius">Celsius (°C)</option>
+                        <option value="fahrenheit">Fahrenheit (°F)</option>
+                        <option value="kelvin">Kelvin (°K)</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label for="">To:</label>
+                </td>
+                <td>
+                    <select name="output" id="output">
+                        <option value="celsius">Celsius (°C)</option>
+                        <option value="fahrenheit">Fahrenheit (°F)</option>
+                        <option value="kelvin">Kelvin (°K)</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <button type="button" id="clear" class="cal-btn" onclick="reset()">Clear</button>
+                </td>
+                <td>
+                    <button type="button" id="convert" class="cal-btn" onclick="convertTemperature()">Convert</button>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label for="">Answer:</label>
+                </td>
+                <td>
+                    <input type="text" id="result" class="display" value="">
+                </td>
+            </tr>
+
+        </table>
+
+    </form>
+
+
+
+    <script>
+        function convertTemperature() {
+            let val = document.getElementById("input_value");
+            let result = document.getElementById("result");
+            let input = document.getElementById("input");
+            let output = document.getElementById("output");
+
+            val.addEventListener("keyup", convertTemperature);
+            input.addEventListener("change", convertTemperature);
+            output.addEventListener("change", convertTemperature);
+
+            let inputValue = input.value;
+            let outputValue = output.value;
+
+            //Celsius
+            if (inputValue === "celsius" && outputValue === "fahrenheit") {
+                result.value = Number((val.value) * 9 / 5) + 32;
+            } else if (inputValue === "celsius" && outputValue === "kelvin") {
+                result.value = Number(val.value) + 273.15;
+            } else if (inputValue === "celsius" && outputValue === "celsius") {
+                result.value = val.value;
+            }
+
+
+            //Fahrenheit
+            if (inputValue === "fahrenheit" && outputValue === "celsius") {
+                result.value = Number((val.value - 32) * 5) / 9;
+            } else if (inputValue === "fahrenheit" && outputValue === "kelvin") {
+                result.value = Number((val.value - 32) * 5 / 9) + 273.15;
+            } else if (inputValue === "fahrenheit" && outputValue === "fahrenheit") {
+                result.value = val.value;
+            }
+
+
+            //Kelvin
+            if (inputValue === "kelvin" && outputValue === "celsius") {
+                result.value = Number(val.value) - 273.15;
+            } else if (inputValue === "kelvin" && outputValue === "fahrenheit") {
+                result.value = Number((val.value - 273.15) * 9 / 5) + 32;
+            } else if (inputValue === "kelvin" && outputValue === "kelvin") {
+                result.value = val.value;
+            }
+
+
+        }
+
+        function reset() {
+            convertTemperature();
+        }
+
+    </script>
+</body>
+
+</html>
